@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ name: mayapp-rep
+ label:
+   app: mayapp-rep
+   type: aaa
+
+spec:
+ template:
+   metadata:
+ name: mayapp-pod
+ label:
+   app: myapp-pod
+   type: aaa
+ spec:
+   containers:
+   - name: nginx-container
+     image: nginx
+replicas: 3
+    

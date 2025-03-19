@@ -1,0 +1,23 @@
+#LimitRange is a policy that sets default and maximum constraints on resource consumption for pods 
+#and containers within a namespace. 
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limit-range-example
+  namespace: my-namespace
+spec:
+  limits:
+  - type: Container
+    max:
+      cpu: "2"           # Maximum CPU per container
+      memory: "1Gi"      # Maximum Memory per container
+    min:
+      cpu: "100m"        # Minimum CPU per container
+      memory: "128Mi"    # Minimum Memory per container
+    default:
+      cpu: "500m"        # Default CPU limit if not specified
+      memory: "256Mi"    # Default Memory limit if not specified
+    defaultRequest:
+      cpu: "250m"        # Default CPU request if not specified
+      memory: "128Mi"    # Default Memory request if not specified

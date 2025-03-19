@@ -1,0 +1,21 @@
+Taints use for Node
+Tolerations use for Pod
+
+-- Create Taints 
+kubectl taint nodes <node-name> <key>=<value>:<effect>
+<node-name> → The name of the node.
+<key> → A label key (e.g., environment).
+<value> → A label value (e.g., production).
+<effect> → The effect of the taint:
+NoSchedule → New pods without a toleration will not be scheduled.
+PreferNoSchedule → The scheduler will try to avoid placing pods but won’t force it.
+NoExecute → Already running pods without a toleration will be evicted.
+
+-- Create Tolerations
+Inside Pod yaml add line tolerations
+tolerations:
+  - key: "environment"
+    operator: "Equal"
+    value: "production"
+    effect: "NoSchedule"
+	

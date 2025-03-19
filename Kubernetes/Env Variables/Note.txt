@@ -1,0 +1,21 @@
+How to create Environment variables.
+There are 2 choices
+1. ConfigMap
+2. Secret
+The differents 
+  1.ConfigMap are stored as a string while Secret are stored as Base64-encoded
+  2.By default Secret can be access only with the same namespace while ConfigMap every namespace can access it.
+
+Using imperative commands
+
+kubecctl create {configmap|secret generic} {name} \
+       --from-literal=APP_001=bule\
+       --from-literal=APP_002=red
+or
+
+kubecctl create {configmap|secret}\
+    --from-file=AAA.properties
+
+    # EXAMPLE AAA.properties
+    APP_001: bule
+    APP_002: red

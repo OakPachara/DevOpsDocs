@@ -1,0 +1,21 @@
+# determines the importance of a pod when scheduling
+
+# Creating
+apiVersion: scheduling.k8s.io.v1
+kind: PriorityClass
+medatadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+
+
+#Using
+apiVersion: v1
+kind: Pod
+metadata:
+  name: high-priority-pod
+spec:
+  priorityClassName: high-priority
+  containers:
+  - name: nginx
+    image: nginx

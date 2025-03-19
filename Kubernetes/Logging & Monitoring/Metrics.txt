@@ -1,0 +1,7 @@
+Metrics doesn't build-in component.
+We can simply install the monitor server by following repository
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# Get list of resource consumptions per {component}
+kubectl top {component} --no-headers | sort -k2 -nr
+# sort -k2 -nr = Sorting {component} by CPU Usage (Descending)

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      ports:
+        - containerPort: 8080
+          # Additionally, In service able to use "name-of-8080" as targetPort
+          # name: name-of-8080 
+          protocol: TCP
+      resources:
+        limits:
+          memory: 20Mi
+        requests:
+          memory: 5Mi
+      # sleep is command, 5000 is argument
+      command: ["sleep","5000"]
+      # or
+      command:
+       - "sleep"
+       - "5000"
+      # or 
+      command: ["python", "app.py"]  # Can be overrides ENTRYPOINT
+      args: ["--color", "blue", "--mode", "debug"]  # Can ve Overrides CMD
+      env:
+       - name: aaa
+         value: "valueA"
+         #or valueForm:.. {name of CondifMap}
+  #tolerations use to restrict Node from accepting certain pods
+  tolerations: # if below conditions are mathed with Node's Taint it will take effect as effect's value
+    - key:"app"
+      operator:"Equal"
+      value:"app01"
+      effect:"NoSchedule" #NoSchedule | PeferNoSchedule | NoExecute
+  # choose Node by label selector
+  nodeSelector:
+    label1: aaaa # Node label
+  # custom scheduler
+  schedulerName: my-custom-scheduler
+  # Scheduling priority
+  priorityClassName: high-priority 

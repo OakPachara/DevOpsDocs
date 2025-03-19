@@ -1,0 +1,47 @@
+# Step 1 Download the Kube-Scheduler Binary
+# K8S_VERSION=v1.28.0  # Specify the Kubernetes version
+# curl -LO https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kube-scheduler
+# chmod +x kube-scheduler
+
+# Step 2 Create a Scheduler Configuration File
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+  - schedulerName: my-scheduler
+    plugins:
+      score:
+        disabled:
+          - name: NodeResourcesBalancedAllocation
+        enabled:
+          - name: NodeResourcesLeastAllocated
+    # pluginConfig:
+    #   - name: NodeResourcesLeastAllocated
+    #     args:
+    #       resources:
+    #         - name: cpu
+    #           weight: 1
+    #         - name: memory
+    #           weight: 1
+leaderElection:
+  leaderElect: true
+  #resourceNamespace: kube-system
+  #resourceName: kube-scheduler
+# clientConnection:
+#   kubeconfig: /etc/kubernetes/scheduler.conf
+# extenders:
+#   - urlPrefix: "http://custom-scheduler-extender.example.com"
+#     filterVerb: "filter"
+#     prioritizeVerb: "prioritize"
+#     weight: 1
+#     enableHttps: false
+#     nodeCacheCapable: false
+
+# To run this command
+# kubectl create configmap -f...
+
+# Step 3 Run the Additional Scheduler
+#Execute the following command to run the scheduler as a separate process:
+#./kube-scheduler --config=scheduler-config.yaml --leader-elect=false
+
+#--config=scheduler-config.yaml: Uses your custom scheduler configuration.
+#--leader-elect=false: Prevents conflicts with the default scheduler (leader election is only needed for HA setups).

@@ -1,0 +1,30 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route("/mutate", methods=["POST"])
+def mutate():
+    req = request.get_json()
+    
+    # Example patch that adds an annotation to the Pod
+    patch = [
+        {
+            "op": "add",
+            "path": "/metadata/annotations/mutated",
+            "value": "true"
+        }
+    ]
+
+    response = {
+        "response": {
+            "uid": req["request"]["uid"],
+            "allowed": True,
+            "patch": base64.b64encode(json.dumps(patch).encode()).decode(),
+            "patchType": "JSONPatch"
+        }
+    }
+
+    return jsonify(response)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=443, ssl_context=("/tls/tls.crt", "/tls/tls.key"))

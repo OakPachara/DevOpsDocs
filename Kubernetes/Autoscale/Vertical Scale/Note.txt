@@ -1,0 +1,18 @@
+vpa for short
+
+VPA doesn't build-in component.
+How to  Install Vertical Pod Autoscaler (VPA)
+kubectl apply -f https://github.com/kubernetes/autoscaler/releases/latest/download/vertical-pod-autoscaler.yaml
+kubectl get pods -n kube-system | grep vpa
+  kube-system    vpa-admission-controller-7f6bf78fc5-n64cb
+  kube-system    vpa-recommender-f47cd47bb-mqf4v          
+  kube-system    vpa-updater-85f7d79d77-tl5jq   
+______________________________
+VPA vs HPA
+Feature	        VPA	                                   HPA
+Scaling type	Changes CPU/memory requests	           Changes number of pods
+Best for	    Stateful apps (databases, ML models)   Stateless apps (web servers, microservices)
+Pod eviction	Yes (restarts pods)	                   No (keeps existing pods)
+______________________________
+Use the kubectl get command to identify the recommended target CPU value:
+kubectl get vpa {name} -o yaml

@@ -1,0 +1,25 @@
+# Just create Deployment first 
+# Then create "HorizontalPodAutoscaler" that refering to this deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          requests:
+            cpu: "200m"
+          limits:
+            cpu: "500m"

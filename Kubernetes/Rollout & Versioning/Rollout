@@ -1,0 +1,14 @@
+Check status of roolout
+kubectl rollout status {deployment name}
+
+rollout
+kubctl roolout undo {deployment name}
+
+
+There are 2 Node update strategies
+  1. ReCreate # Drop all of Nodes and create new 
+  2. RollingUpdate # Drop and re-create each of Node 1 by 1
+
+ How to set strategy
+  pod > spec >strategyType=RollingUpdate|ReCreate
+   

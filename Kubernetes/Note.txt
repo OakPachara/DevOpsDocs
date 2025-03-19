@@ -1,0 +1,86 @@
+
+<-- Standard kubectl Commands
+kubectl get all #get all components
+kubectl get events -o wide  #get events
+kubectl log {servicename} #get logs
+kubectl create | apply | replace #Create/update kubernets components
+  -f {local yaml | https://github..yaml} #with single yaml
+  -f {/pathA/} #with multiple yaml
+  {component type} {name} --image=nginx --replicas=3 # without yaml   
+kubectl describe {component type} {name} # Display current config & event logs
+kubectl run {podname} --image=nginx #quick creating new pod
+kubectl label {component type} {name} {label}={value} #add, update, or remove labels
+kubectl edit {component type} {name} # edit current config(with yaml format)
+kubectl set {config} {component type}/{name} {option to update}={new value} #Quickly editing current config
+        eg kubectl set env pod/my-pod MY_ENV_VAR=new_value
+
+               
+<--- pot Commands
+kubectl get pods --namespace=={namespace} # get all pots
+       -l app=flask-app #get pod by labels
+kubectl describe pod {potname} #get detail of specific pot
+kubectl delete pod {potname} {potname2}
+kubectl run my-pod --image=nginx --restart=Never --namespace==ddd
+
+<--- replicaset Commands
+kubectl get rs # get all replicaset 
+kubectl create deployment {deployment name} --image=httpd:2.4-alpine --repicas=3
+
+<----deployment Commands
+kubectl get deploy # get all deployment
+kubectl scale deployment nginx-deployment --replicas=5
+
+<----servic Commands
+kubectl get svc # get all service
+kubectl expose pod redis --port=6379 --name redis-service #create service:ClusterIP from exists pod
+
+<----namespace Commands
+kubectl condig set-context$(kubectl config current-context) --namespace=dev  #et default namespace
+kubectl create ns {namespace}
+kubectl get ns #get all service
+
+<----Nodes #controlplne is default Node name
+kubectl get node worker-node-1 #get node by name
+
+<---- Taint & Toleration
+kubectl taint nodes {node name} podlabel01=aaaa:{NoSchedule|PeferNoSchedule|NoExecute}
+
+<-- Open an interactive shell session inside a pod
+kubectl exec -it {pod name} -- sh  #use "exit" to end session
+kubectl exec -it {pod name} -- cat /log/app.log #  access to files in pod
+
+<-- Display cluster events / container logs
+ kubectl events {component} {name} 
+ kubectl logs {pod-name} -c {container name}
+
+<-- CRDs Custom Resource Definition
+kubectl get crds
+
+ ------------------------
+<-- Standard kubectl options
+  --namespace ,-n
+  --all-namespace ,-A 
+    #kube-system is default kubernat systems namespace
+  --image=httpd:2.4-alpine
+  --dry-run=client # not create the resource just testing .yaml is ok?
+  -o wide= show more details on lists
+  -o yaml > {filename}
+  --selector env=dev
+  --no-headers | wc -l #number of list's items
+  --watch #automatic refresh every 2 sec
+  --force
+  -o jsonpath="{.spec.containers[*].name}" # get container name in a pod
+
+ --Linux Commands -----------------------
+cat {filename.yaml} #Show content in file 
+vim {filename.yaml} #create/update content in files
+      after finished write the file pass ESC and :wq to save it.  
+     :wq! --save
+     :q! -- exit without save
+     press i -- start edit mode
+
+ | grep -i {text..} /var/lib/kubelet/config.yaml -- get only specific text... in a file
+        -A2 prints 2 lines
+ ls -1 /path/to/directory  #list files in specific path
+ ps -ef #Display list of all running processes on the system.
+ alias list all defined alias # k=kubelet

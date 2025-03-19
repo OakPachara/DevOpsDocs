@@ -1,0 +1,14 @@
+#Limit CPU, Memory, and Pods in a Namespace
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: example-quota
+  namespace: my-namespace
+spec:
+  hard:
+    pods: "10"               # Max 10 pods allowed
+    requests.cpu: "4"        # Max 4 CPU cores requested
+    requests.memory: "4Gi"   # Max 4GB memory requested
+    limits.cpu: "8"          # Max 8 CPU cores used
+    limits.memory: "8Gi"     # Max 8GB memory used

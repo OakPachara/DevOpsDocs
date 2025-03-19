@@ -1,0 +1,24 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: nginx-vpa
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: nginx-deployment
+  updatePolicy:
+    updateMode: "Auto" # Can be "Auto", "Off", or "Initial"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: "my-app"
+        minAllowed:
+          cpu: "250m"
+        maxAllowed:
+          cpu: "2"
+        controlledResource: ["cpu"]
+
+#Check vpa upc recommentations kubectl describe vpa nginx-vpa
+#If updateMode=Auto, Kubernetes evicts the pod and reschedules it with the recommended resources.
+
+#kubectl get vpa

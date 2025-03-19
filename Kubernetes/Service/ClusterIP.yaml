@@ -1,0 +1,37 @@
+
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  type: ClusterIP 
+  #ClusterIP Exposes service only inside the cluster (internal communication).
+  #NodePort Exposes service on each Node’s IP & a static port
+  selector:
+    app: flask  # Targets pods with this label
+  ports:
+    - protocol: TCP
+      port: 80          # Service Port
+      targetPort: 5000  # Flask app container port
+
+
+
+# Example how to mapping service to a pod ------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask-container
+        image: my-flask-app
+        ports:
+        - containerPort: 5000

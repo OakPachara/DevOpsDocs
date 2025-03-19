@@ -1,0 +1,22 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler # hpa  for short
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-app
+  minReplicas: 1 #scale between 1 to 5 replicas.
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50 #adjust the number of pods to maintain 50% CPU utilization.
+
+
+# How to add autoscale to the exists deployment
+# kubectl autoscale deployment my-app --cpu-percent=50 --min=1 --max=5

@@ -1,0 +1,16 @@
+
+#For example we have a contrainer that keep writing randomly
+
+...
+metadata:
+  name:event-simulator-pod
+spec:
+  containers:
+  - name: event-simulator
+________________
+How to see logs
+kubectl logs -f {pod name} -c {container name}
+  -f = continue fetching
+
+How to get containers name in a pod
+kubectl get pod <pod-name> -o jsonpath="{.spec.containers[*].name}"
