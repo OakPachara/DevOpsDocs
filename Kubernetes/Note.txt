@@ -84,3 +84,4 @@ vim {filename.yaml} #create/update content in files
  ls -1 /path/to/directory  #list files in specific path
  ps -ef #Display list of all running processes on the system.
  alias list all defined alias # k=kubelet
+ mkdir {directory} # create new directory

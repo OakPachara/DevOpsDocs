@@ -1,0 +1,71 @@
+Badic Docker commands
+
+docker run {image} # start a container
+           -d run in background mode
+           -i interaction mode(default)
+           -v /opt/data/persistent-data:/var/lib/mysql-data nysql # Volumn mapping
+           -p {external port}:{internal port}
+           --name={container name}
+           --link={alias name:destination container name}
+       attach {id} #open interaction mode for a container
+       exec {id} #run commandline insite container eg. cat /etc/...
+
+docker pull {iamge} # Just pull a image to local
+docker ps #List all running containers
+       -a all containers
+docker stop {id,name} # stop running copntainer
+dcoker rm {id,name} #remove containers
+docker image #List all of images
+docker rmi {name} #remove image
+docker log {container id} display logs of a container
+docker inspect {docker id}
+
+
+------------
+con is containers
+vol is volume
+show all containers | ps -a
+remove images | rmi {name}
+pull image | pull {i name}
+
+Exec
+execute command | exec -it {c name} {command}
+find all PID run in con exec c3ab40bedab2 ps -eaf 
+  
+Set a con to foreground | attach {container id}
+Inspect | inspect {docker id}
+
+volumes
+create vol directory | volume create {vol name}
+mount image to a vol | run -v {destination vol name}:{source image location} {source image name}
+___________________
+-d run in background mode
+-i interaction mode
+-p map port {outside:internal}
+-v map volume  {outside:internal}
+--name define container name
+-it keep intergration-: tag  eq. ubuntu:17.10
+______________
+Inspect ps -a
+Networks> bridge >
+OUT: Getway
+INSIDE: IpAddress
+__________
+dockerfile
+docker build -t yourprojectname:verson .
+_____________
+network
+docker network ls
+___________
+container
+stop <container-name>
+start <container-name>
+
+Get overall info
+docker info
+get storage space  docker system df  (add -v for detaul)
+
+_________________________________________________________
+Linux commands
+ls -ltra get all files/folder in current directory
+cd ~ nevigate to the root

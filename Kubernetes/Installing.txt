@@ -1,1 +1,8 @@
 Kubeadm
+
+kub API Server 
+   kube controller manager
+   ETCD pod name etcd-master : database
+   Scheduler pod name kube-scheduler : asign available  node to pod
+   Kubelet pod kubelet register node to cluster, monitor pod ,load - unload pod to nod 
+   Proxy allow every pod connect togather

@@ -10,7 +10,7 @@ spec:
     app: flask  # Targets pods with this label
   ports:
     - protocol: TCP
-      port: 80          # Service Port
+      port: 5000        # Service Port
       targetPort: 5000  # Flask app container port
 
 
