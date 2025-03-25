@@ -1,5 +1,26 @@
-Kubeadm
+How to install Kubernetes in Docker (Local)
+1. Install "choco" commands first
+is a free, open-source package manager for Windows servers that is very similar to Apt or DNF in the Linux realm. 
+In other words, this is a program used for installing software via the Windows command line.
+  1.1 Open PowerShell (As Administrator)
+  run
+   1. Set-ExecutionPolicy Bypass -Scope Process
+   2. Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) 
 
+2. Install "kind"
+-is a tool for running local Kubernetes clusters using Docker container “nodes”.
+kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
+ 
+"choco install kind"
+
+3. Create a Cluster inside the docker container
+"kind create cluster --name demo-cluster"
+kind creates a Cluster inside container and exposes the Kubernetes API port 
+from inside the container to window, That means we can use "kubectl" from the outside 
+
+________________________________
+Note
+Kubeadm, Need to use "kubeadm" to install Kubenetes in Production
 kub API Server 
    kube controller manager
    ETCD pod name etcd-master : database

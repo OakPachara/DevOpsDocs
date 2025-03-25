@@ -1,0 +1,16 @@
+1.Check status of Rollout
+kubectl rollout status {deployment name}
+
+2.Roll back to the previous version
+kubctl roolout undo {deployment name}
+
+--------------------------------------------------------------
+Note! how to setup rollout strategy in a Pod
+  strategy:
+    type: RollingUpdate #RollingUpdate|ReCreate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1   
+
+ReCreate # Drop all of Nodes and create new 
+RollingUpdate # Drop and re-create each of Node 1 by 1

@@ -1,0 +1,49 @@
+# ETCD is key-value database
+# etcdctl is a command line client for ETCD.
+
+ETCD pod name (by default) = get pod etcd-controlplane -n kube-system
+
+Important ETCD info
+We can find them in "describe pod etcd-controlplan -n kube-system"
+or
+cat /etc/kubernetes/manifests/etcd.yaml #This is real manifests file
+if this file was updated it will restart ETCD automatically
+
+Image version | grep image
+ETCD endpoints | grep --listen-client-urls
+ETCD server certificate file located | grep --cert-file
+ETCD CA Certificate file located | grep --trusted-ca-file 
+ETCD server key file located | grep --key-file
+
+---------------------------------
+Task a ETCD snapshot
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save {save path eg: /opt/snapshot-pre-boot.db}
+
+--------------------------------
+Restore
+ETCDCTL_API=3 etcdctl  \
+--data-dir /var/lib/etcd-{add another name} \
+snapshot restore {snapshot saved path }
+
+#Note 
+By default --data-dir value is /var/lib/etcd
+We suppose to change it to the new file while restoring process
+if --data-dir value is changed
+Go to ETCD manifests files "/etc/kubernetes/manifests/etcd.yaml"
+Then change
+1
+--data-dir = {new path} 
+2
+ volumes:
+  - hostPath:
+      path: {new path}
+      type: DirectoryOrCreate
+    name: etcd-data
+3
+ volumeMounts:
+    - mountPath: {new path}
+      name: etcd-data

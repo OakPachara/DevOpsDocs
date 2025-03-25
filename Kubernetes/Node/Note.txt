@@ -1,0 +1,9 @@
+
+kubectl get {node name}
+kubectl drain {node name} #pause Node 
+            --ignore-daemonsets #force pause
+kubectl cordon {node name} #stop Node for new scheduling
+kubectl uncordon {node name} #un-pause Node
+
+#Checking are there Pods are running in a Node
+kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=<node-name>

@@ -1,0 +1,38 @@
+# This example use Docker image from below repository
+# pacharakhawtong/net8blackproject
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnet-deploy
+  namespace: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aspnet-pod
+  template:
+    metadata:
+      labels:
+        app: aspnet-pod
+    spec:
+      containers:
+        - image: pacharakhawtong/asp-net-core-8:latest
+          name: aspnet-container
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnet-service
+  namespace: app
+spec:
+  type: NodePort
+  selector:
+    app: aspnet-pod
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30000

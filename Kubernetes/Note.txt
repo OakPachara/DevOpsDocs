@@ -13,6 +13,7 @@ kubectl label {component type} {name} {label}={value} #add, update, or remove la
 kubectl edit {component type} {name} # edit current config(with yaml format)
 kubectl set {config} {component type}/{name} {option to update}={new value} #Quickly editing current config
         eg kubectl set env pod/my-pod MY_ENV_VAR=new_value
+kubadm version , kubectl version
 
                
 <--- pot Commands
@@ -85,3 +86,5 @@ vim {filename.yaml} #create/update content in files
  ps -ef #Display list of all running processes on the system.
  alias list all defined alias # k=kubelet
  mkdir {directory} # create new directory
+ ssh {node name} access to worker node
+ cat/etc/*release* # Get Ubuntu version

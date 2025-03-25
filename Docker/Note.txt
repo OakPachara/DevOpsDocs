@@ -1,4 +1,9 @@
-Badic Docker commands
+My Docker repositories
+pacharakhawtong/net8blackproject
+ - docker push pacharakhawtong/net8blackproject:tagname
+ 
+--------------------------------------------------------
+Basic Docker commands
 
 docker run {image} # start a container
            -d run in background mode
@@ -19,9 +24,9 @@ docker image #List all of images
 docker rmi {name} #remove image
 docker log {container id} display logs of a container
 docker inspect {docker id}
+docker build -t {image name} .
 
-
-------------
+-- Old -------------------------------------------------
 con is containers
 vol is volume
 show all containers | ps -a

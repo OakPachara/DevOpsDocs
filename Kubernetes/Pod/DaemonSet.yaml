@@ -1,0 +1,23 @@
+#a DaemonSet ensures that a copy of a specific Pod runs on all (or some) Nodes in a cluster
+#One DaemonSet = one type of Pod per a Node
+
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemonset
+  labels:
+    app: my-daemon
+spec:
+  selector:
+    matchLabels:
+      app: my-daemon
+  template:
+    metadata:
+      labels:
+        app: my-daemon
+    spec:
+      containers:
+      - name: my-daemon-container
+        image: busybox
+        args: ["/bin/sh", "-c", "while true; do echo Hello from DaemonSet; sleep 60; done"]
