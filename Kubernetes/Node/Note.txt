@@ -7,3 +7,6 @@ kubectl uncordon {node name} #un-pause Node
 
 #Checking are there Pods are running in a Node
 kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=<node-name>
+
+#Default Node Manifests files
+/ect/kubernetes/manifests/...yaml

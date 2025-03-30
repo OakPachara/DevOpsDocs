@@ -19,8 +19,16 @@ kind creates a Cluster inside container and exposes the Kubernetes API port
 from inside the container to window, That means we can use "kubectl" from the outside 
 
 ________________________________
+Kubeadm
+If Kebernetes is installed via "kubeadm"
+By defaults every configuration are located inside 
+/etc/kubernetes/manifests/{service name}.yaml
+
+Whereas if it's installed manually, it would located as "systemd"
+/etc/systemd/system/{service name}.service
+
+________________________________
 Note
-Kubeadm, Need to use "kubeadm" to install Kubenetes in Production
 kub API Server 
    kube controller manager
    ETCD pod name etcd-master : database

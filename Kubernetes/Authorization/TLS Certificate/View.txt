@@ -1,0 +1,15 @@
+We can see Certifiactes of each component by look as its configs
+
+If Kebernetes is installed via "kubeadm"
+By defaults every configuration are located inside 
+/etc/kubernetes/manifests/{service name}.yaml
+
+Whereas if it's installed manually, it would located as "systemd"
+/etc/systemd/system/{service name}.service
+
+____________________________________
+For example if we want to know about API server certification
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep "--tls-cert-file"
+
+then decode the certificate file
+openssl x509 -in {certificate.crt} -text -noout

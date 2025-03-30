@@ -1,0 +1,40 @@
+TLS Communication flows
+
+Client                        Server ( with Crt )
+  --------- Requst    ---------->
+                              - Create Pri & Pub pair
+  <-------- Pub + Crt ----------<
+  - Validate Crt
+  - Client use Pub to encrypt data
+    then use it throughout forward requests
+  >-------> Encrypted Request ---->
+                             - Use Pub to decrypt Reqeust
+
+#Pub = Publish key > use for encrypt data only
+#Pri = Private key > use for decrypt data only
+#Crt = TLS Crttificate
+#Sym = Symmetric key
+
+
+-------------------------------
+Naming convention
+
+server.crt or server.pem #server certificates
+client.crt or client.pem #client certifications
+xxx.key or xxx-key.pem #private keys
+xxx without extension #publish keys
+
+-------------------------------
+
+Create private key & Publish key pair for SSH purposes
+ssh-keygen
+file results 
+   id_rsa > private key    
+   id_rsa.pub > publish key
+-------------------------------
+
+Create private & Publish key pair for API request purposes
+openssl genrsa -out {filename}.key 1024
+openssl rsa -in {filename}.key -pubout > {filename}.pem 
+file results
+  {filename}.pem 

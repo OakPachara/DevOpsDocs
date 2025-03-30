@@ -1,0 +1,6 @@
+Get all Clusters
+kubectl config get-clusters get all Cluster name
+
+Switch Cluster
+kubectl config use-context {cluster name}
+

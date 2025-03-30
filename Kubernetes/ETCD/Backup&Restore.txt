@@ -17,14 +17,15 @@ ETCD server key file located | grep --key-file
 
 ---------------------------------
 Task a ETCD snapshot
-ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+ETCDCTL_API=3 etcdctl 
+--endpoints=https://127.0.0.1:2379 \
 --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 --cert=/etc/kubernetes/pki/etcd/server.crt \
 --key=/etc/kubernetes/pki/etcd/server.key \
 snapshot save {save path eg: /opt/snapshot-pre-boot.db}
 
 --------------------------------
-Restore
+Restore ETCD data
 ETCDCTL_API=3 etcdctl  \
 --data-dir /var/lib/etcd-{add another name} \
 snapshot restore {snapshot saved path }
@@ -47,3 +48,11 @@ Then change
  volumeMounts:
     - mountPath: {new path}
       name: etcd-data
+
+#Note if the ETCD doesn't have manifests file,ETCD might be installed in systemd
+Go edit value at 
+ vim /etc/systemd/system/etcd.service
+And restart the service
+ systemctl daemon-reload
+ systemctl restart etcd
+ system status etcd
