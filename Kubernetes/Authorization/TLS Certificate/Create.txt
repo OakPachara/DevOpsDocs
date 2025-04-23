@@ -1,18 +1,17 @@
 How to create Certification using openssl
 Every Certification in kubernetes can be created using 
-the same way but the different are at 
+the same way but differents in  
 "Certificate Singing request" process
-Below are examples how to create
 
 __________________________________
-#Create Certificate authority (CA)
+# Example of creating Certificate authority (CA)
 # Genrate keys , output ca.key
 openssl genrsa -out ca.key 2048
 
 # Certificate Singing request
-# This is a certification with details
+# Setting details to a certification
 openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -OUT ca.csr
-#"/CN=KUBERNETES-CA" <-- type of certificates
+#"/CN=KUBERNETES-CA" <-- certificate details
 
 # Sign certificates output ca.crt
 openssl x509 -req -in ca.csr -signkey -out ca.crt
@@ -22,13 +21,13 @@ ca.key = private key
 ca.crt = publich key with certificate
 
 __________________________________
-Client Certifiacte (Admin)
+Example of creating Client Certifiacte (Admin)
 /CN=kube-admin
 additional ADD user group 
 "/CN=kube-admin/O=system:masters"
 
 __________________________________
-Kube Api server Certificate
+Example of creating Kube Api server Certificate
 "/CN=kube-apiserver"
 additional define DNSs for Api server
 create openssl.csr add DNS name or IPs as [alt_name] session

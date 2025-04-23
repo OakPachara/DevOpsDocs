@@ -4,3 +4,7 @@ kubectl config get-clusters get all Cluster name
 Switch Cluster
 kubectl config use-context {cluster name}
 
+
+Get Current 
+kubectl config  current-context \
+--kubeconfig=/root/my-kube-config # Additional define Config file

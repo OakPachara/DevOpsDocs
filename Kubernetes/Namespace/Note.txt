@@ -1,0 +1,18 @@
+# How to get all resources with inside an outside namespace
+
+kubectl api-resources --namespaced=true
+kubectl api-resources --namespaced=false
+
+#set default namespace (ns)
+kubectl condig set-context$(kubectl config current-context) --namespace=dev 
+
+-------------------
+Kubens plugin
+Allow switching between namespaces quickly
+
+Installation:
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+To switch
+kubens <new_namespace>

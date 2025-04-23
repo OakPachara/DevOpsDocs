@@ -1,0 +1,50 @@
+#To see the existing routing configuration on a system
+ route
+
+#adds a static route to the system's routing table. 
+ip route add 192.168.2.0/24 via 192.168.1.1
+#192.168.2.0/24: This is the destination network (i.e., any IP from 192.168.2.0 to 192.168.2.255).
+#via 192.168.1.1: This tells the system to send traffic for the destination network through the gateway at IP address 192.168.1.1.
+#Summary
+#This command configures the system so that any traffic destined for the 192.168.2.0/24 
+network will be forwarded to 192.168.1.1
+
+-----------------------------------------
+#adds a default route
+ip route add default via 192.168.2.1
+#All outbound traffic that doesn’t match any existing route will be sent to 192.168.2.1, which is expected to forward it appropriately
+
+-----------------------------------------
+Example
+
+We have HostA connect to Network 192.168.1.0 with IP 192.168.1.5 
+We have HostB connect to Network both 192.168.1.0 and 192.168.2.0
+  and have IP on both Network
+  192.168.1.6 for Network 192.168.1.0
+  192.168.2.6 for Network 192.168.2.0
+We have HostC connect to Network 192.168.2.0 With IP 192.168.2.5
+
+How to make the connection between A and C
+
+We can't use HostA pinging to HostC at first
+ping 192.168.2.5  #"Connect: Network is unreachable"
+
+We have add routing table to both of them first
+ip route add 192.168.2.0/24 via 192.168.1.6
+ip route add 192.168.1.0/24 via 192.168.2.6
+
+#Now we can use HostA pinging to HostC
+ping 192.168.2.5
+#But we can find any response yet, We have to explicitly allow HostB
+#to forward packets
+cat /proc/sys/net/ipv4/ip_forward #result=0
+echo 1 > /proc/sys/net/ipv4/ip_forward  # replace 0 to 1
+---
+vim /etc/sysctl.cong  #set net.ipv4.ip_forward =1
+
+-----------------------------------------
+#shows the status and configuration of network interfaces on the system.
+ip link
+
+# displays IP address information for all network interfaces on the system.
+ip addr

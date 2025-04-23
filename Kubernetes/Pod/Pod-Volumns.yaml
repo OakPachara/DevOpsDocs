@@ -1,0 +1,33 @@
+# Example how to use volumes in a pod
+# This example shows how to use a volume in a pod
+# The volume is mounted to the /data directory in the container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-volume
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - mountPath: /data
+          name: my-volume
+  volumes:
+    - name: my-volume
+      # The hostPath volume mounts a directory from the host to the container
+      # It's work find if you are running a single node cluster
+      # Note: The data aren't shared between the nodes
+      hostPath:
+        path: /data
+        type: DirectoryOrCreate
+      # Example how to use external storage like awsElasticBlockStore or gcePersistentDisk
+      # awsElasticBlockStore:
+      #  volumeID: aws://us-west-2/vol-12345678
+      #  fsType: ext4
+      # gcePersistentDisk:
+      #  pdName: my-pd-name
+      #  fsType: ext4
+
+      ---
+
+      

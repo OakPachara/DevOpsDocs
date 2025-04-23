@@ -1,0 +1,7 @@
+PersistentVolume (PV) is a piece of storage in the cluster 
+that has been provisioned by an administrator or dynamically provisioned using StorageClasses. 
+It is independent of any individual pod and remains even after the pod is deleted, 
+allowing data to persist across pod restarts or rescheduling.
+Is is as similar is Node but the different Is
+PersistentVolume use for Volumes
+Node use for Pods

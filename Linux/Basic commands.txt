@@ -1,0 +1,34 @@
+
+cat {filename.yaml} #Show content in file 
+vim {filename.yaml} #create/update content in files
+      after finished write the file pass ESC and :wq to save it.  
+     :wq! --save
+     :q! -- exit without save
+     press i -- start edit mode
+
+ | grep -i {text..} /var/lib/kubelet/config.yaml -- get only specific text... in a file
+        -A2 #prints 2 lines
+        --color=auto #highlight
+       --no-headers | wc -l #count line
+ ls /path/to/directory #list files in specific path
+   -1 #list 1 item a row
+   -l #showing details like permissions, owner, group, size, and modification date.
+        {directory/abc*} #targets all files in that directory starting abc
+
+ ps -ef #Display list of all running processes on the system.
+ alias list all defined alias # k=kubelet
+ mkdir {directory} # create new directory
+ ssh {node name} #access to a node # type exit or Control+ D to get back 
+ cat/etc/*release* # Get Ubuntu version
+ scp cluster1-controlplane:/opt/cluster1.db /opt  #copy a file from a remote server to the local
+     {remote server}:{target file} {destination path on the local machine}
+
+# crictl is a CLI tool for CRI-compatible container runtimes like containerd or CRI-O
+crictl ps -a #lists all containers, regardless of state, managed by the container runtime.
+crictl logs {container id} get container logs
+# If containers are Docker we can use "docker" instead of "crictl"
+--------------------------------------
+#edit shell environment
+vim ~/.bashrc #open .bashrc in current directory
+export KUBECONFIG=/root/my-kube-config # add environment variables
+source ~/.bashrc # save

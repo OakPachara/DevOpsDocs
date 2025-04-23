@@ -1,3 +1,7 @@
+# Nodes are located inside the Cluster but outside Namespace
+# To Add/Delete Node required Role at the cluster-scoped 
+
+
 
 kubectl get {node name}
 kubectl drain {node name} #pause Node 
@@ -10,3 +14,6 @@ kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=<node-n
 
 #Default Node Manifests files
 /ect/kubernetes/manifests/...yaml
+
+#Checking Node CPU consumption
+kubectl top node

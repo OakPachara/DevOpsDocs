@@ -1,0 +1,23 @@
+# Persistemt Volume (PV) and Persistent Volume Claim (PVC) example
+# This example shows how to use a persistent volume in a pod
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+    # ReadWriteOnce: allow only one node to write to the volume at a time
+    # ReadWriteMany: allows multiple nodes to write to the volume at the same time
+    # ReadOnlyMany: allows multiple nodes to read from the volume at the same time but not writeable
+
+  hostPath:
+    path: "/mnt/data"
+  persistentVolumeReclaimPolicy: Retain
+  # Reclaim policy: Retain, Recycle, Delete
+  # Retain: Retain the volume after the claim is deleted
+  # Recycle: Recycle the volume after the claim is deleted
+  # Delete: Delete the volume after the claim is deleted
+

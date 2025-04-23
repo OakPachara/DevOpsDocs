@@ -1,0 +1,32 @@
+#Create a New users using CertificateSigningRequest (CSR)
+
+#1Generate Private Key and CSR for the new user
+# openssl genrsa -out myuser.key 2048
+# openssl req -new -key myuser.key -out myuser.csr -subj\
+# "/CN=myuser/O=mygroup"
+
+#2. Create CSR YAML
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: myuser-csr
+spec:
+  groups:
+    - system:authenticated
+  request: <base64-encoded-csr> # cat myuser.csr | base64 | tr -d '\n'
+  signerName: kubernetes.io/kube-apiserver-client
+  expirationSeconds: 31536000
+  usages:
+    - client auth
+
+#3. Submit the CSR
+#kubectl apply -f myuser-csr.yaml
+
+#4. Get & Approve the CSR
+#kubectl get csr
+#kubectl certificate approve myuser-csr
+
+#5. Create kubeconfig for the user
+#kubectl config set-credentials myuser --client-certificate=myuser.crt --client-key=myuser.key
+#kubectl config set-context myuser-context --cluster=my-cluster --user=myuser
+#kubectl config use-context myuser-context

@@ -1,0 +1,33 @@
+#RBAC (ROLE BASED ACCESS CONTROL)
+#RBAC is a method of regulating access to computer or network resources based on the roles of individual users within an enterprise.
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default  # 1 role only applies to 1 namespace
+  name: example-role111
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "create", "delete"] 
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["update", "patch"]  
+
+  #--------------------
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: example-rolebinding
+    namespace: default
+  subjects:
+  - kind: User
+    name: jane-doe
+    apiGroup: rbac.authorization.k8s.io
+  roleRef:
+    kind: Role
+    name: example-role111
+    apiGroup: rbac.authorization.k8s.io

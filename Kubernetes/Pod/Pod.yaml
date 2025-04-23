@@ -30,6 +30,10 @@ spec:
        - name: aaa
          value: "valueA"
          #or valueForm:.. {name of CondifMap}
+      serviceAccountName: myapp-sa # ServiceAccount name
+    - name: private-image
+      image: private-registry.com/myapp:latest
+
   #tolerations use to restrict Node from accepting certain pods
   tolerations: # if below conditions are mathed with Node's Taint it will take effect as effect's value
     - key:"app"
@@ -42,4 +46,10 @@ spec:
   # custom scheduler
   schedulerName: my-custom-scheduler
   # Scheduling priority
-  priorityClassName: high-priority 
+  priorityClassName: high-priorit
+  imagePullSecrets:
+    - name: myregistrykey # Secret name for private registry
+    # Example: kubectl create secret docker-registry \
+    # myregistrykey --docker-server=<server> \
+    # --docker-username=<user> --docker-password=<password> --docker-email=<email>
+

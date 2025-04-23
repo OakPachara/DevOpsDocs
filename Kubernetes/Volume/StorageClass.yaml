@@ -1,0 +1,61 @@
+# Example how to use StorageClass
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: storage-class-gce-pd
+provisioner: pd.csi.storage.gke.io # Provisioner for GCE PD
+parameters:
+  type: pd-standard #  pd-standard, pd-ssd
+  replication-type: none #  none, regional-pd
+  zone: us-central1-a # Specify the zone, e.g., us-central1-a, us-central1-b
+  fsType: ext4 # ext4, xfs
+  blockCleanerCommand: "/usr/bin/gce-pd-cleaner" # Command to clean the block
+  blockCleanerCommandArgs: ["--zone", "us-central1-a"] # Arguments for the block cleaner command
+  blockCleanerCommandTimeout: "5m" # Timeout duration, e.g., 5m, 10m
+
+---
+# Example how to use StorageClass with AzureFile
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: storage-class-azure-file
+provisioner: file.csi.azure.com # Provisioner for Azure File
+parameters:
+  skuName: Standard_LRS # Options: Standard_LRS, Standard_GRS, Premium_LRS
+  location: eastus # Specify the Azure region, e.g., eastus, westus
+  storageAccount: myStorageAccount # Name of the storage account
+  secretNamespace: kube-system # Namespace where the secret is stored
+  secretName: azure-secret # Name of the secret containing Azure credentials
+  mountOptions: "-o vers=3.0" # Mount options for the file share
+
+---
+# Example how to create PersistentVolumeeClaim with StorageClass
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteMany # Options: ReadWriteOnce, ReadOnlyMany, ReadWriteMany
+  resouirces:
+    requersts:
+      storage: 5Gi # Size of the volume, e.g., 5Gi, 10Gi
+  storageClassName: storage-class-gce-pd # Name of the StorageClass to use
+
+---
+# Example how to use PersistentVolumeClaim in a Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-using-pvc
+spec:
+  containers:
+    - name: app
+      iamge: inginx
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: my-storage
+  volumes:
+    - name: my-storage
+      persistentVolumeClaim:
+        claimName: my-pvc # Name of the PersistentVolumeClaim to use

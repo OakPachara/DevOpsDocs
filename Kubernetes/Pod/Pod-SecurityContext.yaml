@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-pod
+spec:
+  containers:
+  - name: myapp
+    image: busybox
+    command: ["sleep", "3600"]
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 3000
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add: ["SYS_TIME"]
+  - name: myapp2-without-security-context
+    image: busybox
+    command: ["sleep", "3600"]
+    
+
+#------------------------
+# Or we can add securityContext at Pod level
+# All of the containers in the Pod will inherit this security context
+#------------------------
+  securityContext:
+    fsGroup: 2000
+    runAsUser: 1000
+    runAsGroup: 3000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      add: ["NET_ADMIN"]
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true

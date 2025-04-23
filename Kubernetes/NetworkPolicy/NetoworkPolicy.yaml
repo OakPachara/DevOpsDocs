@@ -1,0 +1,53 @@
+#Allow only Pods with label role=db to receive traffic on port 3306 (MySQL) from Pods with label role=api.
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-to-db
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db   # Target Pods
+  policyTypes:
+  - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: api   # Allowed source Pods
+      ports:
+        - protocol: TCP
+          port: 3306
+
+# -------------------------
+# Example how to allow traffic from multiple sources
+# Allow Pods with labels role=api or role=api2 
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: api
+        - podSelector:
+            matchLabels:
+              role: api2
+# -------------------------
+# Example how to allow traffic from multiple sources with multiple labels
+# Allow Pods with labels role=api and name=web
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: api
+              name: web
+
+# -------------------------
+# Example how to allow traffic from multiple sources with multiple labels and namespace
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            role: api
+        namespaceSelector:
+          matchLabels:
+            name: dev

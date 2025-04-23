@@ -7,14 +7,17 @@ kubectl create | apply | replace #Create/update kubernets components
   -f {local yaml | https://github..yaml} #with single yaml
   -f {/pathA/} #with multiple yaml
   {component type} {name} --image=nginx --replicas=3 # without yaml   
+  # except pod: use kubectl run {podname}
 kubectl describe {component type} {name} # Display current config & event logs
 kubectl run {podname} --image=nginx #quick creating new pod
 kubectl label {component type} {name} {label}={value} #add, update, or remove labels
 kubectl edit {component type} {name} # edit current config(with yaml format)
 kubectl set {config} {component type}/{name} {option to update}={new value} #Quickly editing current config
         eg kubectl set env pod/my-pod MY_ENV_VAR=new_value
+kubectl delete {component} {name}      
 kubadm version , kubectl version
-               
+kubectl exec {pod} -- whoami # Check user that is running the pod
+
 <--- pot Commands
 kubectl get pods --namespace=={namespace} # get all pots
        -l app=flask-app #get pod by labels
@@ -71,22 +74,3 @@ kubectl get crds
   --force
   -o jsonpath="{.spec.containers[*].name}" # get container name in a pod
 
- --Linux Commands -----------------------
-cat {filename.yaml} #Show content in file 
-vim {filename.yaml} #create/update content in files
-      after finished write the file pass ESC and :wq to save it.  
-     :wq! --save
-     :q! -- exit without save
-     press i -- start edit mode
-
- | grep -i {text..} /var/lib/kubelet/config.yaml -- get only specific text... in a file
-        -A2 #prints 2 lines
-        --color=auto #highlight
- ls -1 /path/to/directory  #list files in specific path
- ps -ef #Display list of all running processes on the system.
- alias list all defined alias # k=kubelet
- mkdir {directory} # create new directory
- ssh {node name} #access to a node # type exit or Control+ D to get back 
- cat/etc/*release* # Get Ubuntu version
- scp cluster1-controlplane:/opt/cluster1.db /opt  #copy a file from a remote server to the local
-     {remote server}:{target file} {destination path on the local machine}

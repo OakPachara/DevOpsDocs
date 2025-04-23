@@ -1,0 +1,21 @@
+How to check API server authorization mode
+Go to API server manifests file look at 
+ --authorization-mode="AlwaysAllow" 
+     #"AlwaysAllow" (default) , NODE , RBAX ,Webhook
+
+     ** authrization mode able to add multiple modes on the same time.    
+     ** For example  NODE,RBAX,Webhook
+     ** It will alow if there is at least one of mode allow.
+
+---------------------------------------------------------------
+RBAC authorization mode
+kubectl get roles
+kubectl get rolebindings # Mapping User to the role
+# Get all users (only RBAC)
+kubectl get rolebindings --all-namespaces -o jsonpath='{range .items[*].subjects[?(@.kind=="User")]}{.name}{"\n"}{end}' | sort -u
+
+
+--------------------------------------------------------------
+Checking user access privilege 
+kubectl auth can-i {verb} {component} ?--as {users}
+kubectl auth can-i create nodes --as dev-user
