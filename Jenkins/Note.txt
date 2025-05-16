@@ -1,0 +1,52 @@
+Jenkins
+
+email: admin@admin.com
+url:http://localhost:8080/
+
+_____________________________
+Install Jenkins server on Docker
+1. pull docker file
+  https://github.com/devopsjourney1/jenkins-101.git
+2.  Build docker image
+ docker build -t oak-jenkins:latest .
+3. Create docker network for Jenkins
+  docker network create jenkins    
+   //  'jenkins' is network name that will using in No.4
+4. Run docker image from No.2
+  docker run --name oak-jenkins-container --restart=on-failure --detach `
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 `
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 `
+  --volume jenkins-data:/var/jenkins_home `
+  --volume jenkins-docker-certs:/certs/client:ro `
+  --publish 8080:8080 --publish 50000:50000  oak-jenkins:latest
+
+
+_____________________________
+Initial first installed Jenkins
+1. Open url portal: url:http://localhost:8080/
+2. Get the first password
+docker exec oak-jenkins-container cat /var/jenkins_home/secrets/initialAdminPassword
+
+____________________________
+1 Create CI/CDS jobs
+     As Dashboard
+    1.1 create New Item > Select an item type Pipline
+    1.2 As Pipeline>Definition
+         Select Pipline script from SCM
+         Select SCM to Git , Fill in the Repository Url
+    Save
+ 
+2. Create Agent
+    2.1 Manage Jenkins>Could> + New cloud
+    2.2 Fill Cloud name
+          Type = Docker
+           Click Create
+     2.3 Fill Docker Host URI
+     2.4 Create Docker Agent templates
+        Fill Label,Name
+        Fill Docker iamge > Example devopsjourney1/myjenkinsagents:python
+        
+
+docker-agent-for-net8
+docker build -t pacharakhawtong/net8blackproject:dev .
+docker push pacharakhawtong/net8blackproject:dev      
