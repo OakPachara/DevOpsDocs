@@ -1,0 +1,16 @@
+Create a file
+sudo touch {file name}
+or
+sudo vim {file name}
+-------------
+Copy file and paste to another locatiob
+cp {source name} {destination path}
+Move file
+mv  {source name} {destination path}
+Remove file
+rm {file name}
+----------
+Create a directory
+mkdir {directory name}
+Remove directory
+rmdir {directory name}

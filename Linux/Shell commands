@@ -1,0 +1,7 @@
+
+#!/bin/bash
+echo "Hello, World!"
+--------------------------------
+
+Running a Script
+bash abc.sh

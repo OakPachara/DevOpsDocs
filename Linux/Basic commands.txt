@@ -1,4 +1,7 @@
+man {command} explain about {command}
+--------------------------------------------------
 
+pwd get current directory
 cat {filename.yaml} #Show content in file 
 vim {filename.yaml} #create/update content in files
       after finished write the file pass ESC and :wq to save it.  

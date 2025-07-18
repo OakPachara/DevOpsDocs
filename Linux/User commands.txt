@@ -1,0 +1,12 @@
+User related Linux commands.
+
+whoami : Get the current user
+su {user}: Switch the user 
+ If want to switch to root user just type 'su' if it have error Authentication failure
+ try to use 'sudo bash'
+ ------------
+ Add New user
+ Step 1 sudo useradd {new user} 
+ Step 2 sudo passwd {password}
+ Delete user
+ sudo userdel {user to delete}

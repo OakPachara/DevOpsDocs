@@ -48,3 +48,9 @@ ip link
 
 # displays IP address information for all network interfaces on the system.
 ip addr
+
+# Display all listing port and not listing port avairable
+netstat -a
+
+# Lookup for the ip address of domain
+ns lookup {google.com}
