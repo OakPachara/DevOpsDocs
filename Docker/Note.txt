@@ -20,7 +20,7 @@ docker ps #List all running containers
        -a all containers
 docker stop {id,name} # stop running copntainer
 dcoker rm {id,name} #remove containers
-docker image #List all of images
+docker images #List all of images
 docker rmi {name} #remove image
 docker log {container id} display logs of a container
 docker inspect {docker id}

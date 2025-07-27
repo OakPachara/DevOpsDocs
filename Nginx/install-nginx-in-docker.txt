@@ -1,0 +1,6 @@
+Run Nginx container
+1.docker run --name my-nginx -p 8080:80 -d nginx
+
+Inspect it inside a running container
+docker exec -it my-nginx cat /etc/nginx/nginx.conf
+
