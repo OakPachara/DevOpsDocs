@@ -1,0 +1,50 @@
+## Docker Compose file for a single-node Kafka broker using KRaft (no ZooKeeper).
+## Each setting is annotated to explain its purpose.
+version: '3.8'  # Compose schema version used by this file
+
+services:  # Define the set of containers that make up this application
+  kafka:  # Service name (also becomes container's DNS name on the network)
+    image: confluentinc/cp-kafka:7.8.5  # Kafka image with KRaft support
+    container_name: kafka  # Explicit container name for easy referencing
+    ports:
+      - "9092:9092"  # Map host 9092 -> container 9092 (client/broker port)
+    environment:  # Kafka broker configuration via environment variables
+      # Enable KRaft (ZooKeeper-less) mode
+      KAFKA_KRAFT_MODE: 'true'
+
+      # Unique identifier for the Kafka cluster (example value for local dev).
+      # In production, initialize with `kafka-storage random-uuid` and use that.
+      CLUSTER_ID: 'OAK-123-4567890-abcdef1234567890abcdef'
+
+      # Numeric ID for this broker/controller node (must be unique within cluster)
+      KAFKA_NODE_ID: 1
+
+      # Run both the broker and controller roles in bthis single process
+      KAFKA_PROCESS_ROLES: broker, controller
+
+      # Define the controller quorum: nodeId@host:controllerPort
+      # Here we have a single voter (this same container) on port 9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+
+      # Internal topics (like __consumer_offsets) use 1 replica in single-node dev
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+      # Expose two listeners inside the container:
+      # - PLAINTEXT for client traffic on 9092
+      # - CONTROLLER for the KRaft controller traffic on 9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+
+      # How the broker advertises itself to clients (use host-accessible address)
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+
+      # Tell Kafka which listener name to use for controller communication
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # Path (inside container) where KRaft metadata and logs are stored
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+
+    volumes:
+      # Persist Kafka data/metadata to a named volume on the host
+      - kafka_kraft:/var/lib/kafka/data
+volumes:  # Declare named volumes used by services above
+  kafka_kraft:  # Uses the default local driver to store Kafka data
